@@ -4,13 +4,12 @@ import s from './imageGalleryItem.module.css';
 
 const ImageGalleryItem = ({ webformatURL, tags, largeImageURL }) => {
   return (
-    <li className={s.galleryItem}>
+    <li className={s.imageGalleryItem}>
       <img
         src={webformatURL}
-        data-img={largeImageURL}
+        data={largeImageURL}
         alt={tags}
-        className={s.galleryImg}
-        width={500}
+        className={s.imageGalleryItemImage}
       />
     </li>
   );

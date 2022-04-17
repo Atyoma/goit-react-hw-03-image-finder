@@ -8,7 +8,6 @@ export default class ImageGallery extends Component {
     picture: null,
     error: null,
     status: 'idle',
-    loading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
