@@ -2,7 +2,9 @@ import { Component } from 'react';
 import s from './searchbar.module.css';
 import { ImSearch } from 'react-icons/im';
 import propTypes from 'prop-types';
-// import { toast } from 'react-toastify';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Searchbar extends Component {
   state = {
@@ -15,9 +17,10 @@ export default class Searchbar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log(this.state.pictureName);
     // предотвращение отпраавки пустой строки
     if (this.state.pictureName.trim() === '') {
-      alert('Please enter search name');
+      toast.warning('Please enter search name'); //info    success   warning  error  default
       return;
     }
     this.props.onSubmit(this.state.pictureName);
