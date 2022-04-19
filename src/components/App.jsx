@@ -3,6 +3,7 @@ import { Component } from 'react';
 import s from './app.module.css';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
+// import Modal from './Modal/modal';
 // import Button from './Button/Button';
 
 import { ToastContainer } from 'react-toastify';
@@ -12,7 +13,7 @@ export default class App extends Component {
     picture: '',
     status: 'idle',
     page: 1,
-    pictureGallery:[]
+    pictureGallery: [],
   };
 
   handleFormSubmit = picture => {
@@ -28,9 +29,6 @@ export default class App extends Component {
       <div className ={s.app}>
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery picture={this.state.picture} page={this.state.page} pictureGallery={this.state.pictureGallery} />
-         {/* {this.state.picture.length > 0 && (
-          
-        )} */}
         <ToastContainer autoClose={3000} />
       </div>
     );

@@ -3,8 +3,10 @@ import s from './imageGallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import Loader from 'components/Loader/Loader';
 import Button from 'components/Button/button';
+import Modal from 'components/Modal/modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import propTypes from 'prop-types';
 
 export default class ImageGallery extends Component {
   state = {
@@ -13,6 +15,8 @@ export default class ImageGallery extends Component {
     picture: null,
     error: null,
     status: 'idle',
+    modal: null,
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -66,8 +70,16 @@ export default class ImageGallery extends Component {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
 
+  toggleModal = modalImage => {
+    // console.log(e);
+    this.setState(state => ({
+      showModal: !state.showModal,
+      modal: modalImage,
+    }));
+  };
+
   render() {
-    const { status, pictureGallery, picture, page } = this.state;
+    const { status, pictureGallery, picture, page, showModal } = this.state;
     if (status === 'idle') {
       return null;
     }
@@ -90,13 +102,27 @@ export default class ImageGallery extends Component {
                   tags={hit.tags}
                   largeImageURL={hit.largeImageURL}
                   webformatURL={hit.webformatURL}
+                  pictureGallery={pictureGallery}
+                  onClick={this.toggleModal}
                 />
               );
             })}
           </ul>
           {balance > 0 && <Button loadMore={this.loadMore} />}
+          {showModal && (
+            <Modal
+              onClose={this.toggleModal}
+              modalImage={this.state.modal}
+            ></Modal>
+          )}
         </>
       );
     }
   }
 }
+
+ImageGallery.propTypes = {
+  page: propTypes.number,
+  picture: propTypes.string,
+  pictureGallery: propTypes.array,
+};
