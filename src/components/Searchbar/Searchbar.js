@@ -17,7 +17,7 @@ export default class Searchbar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.pictureName);
+    // console.log(this.state.pictureName);
     // предотвращение отпраавки пустой строки
     if (this.state.pictureName.trim() === '') {
       toast.warning('Please enter search name'); //info    success   warning  error  default

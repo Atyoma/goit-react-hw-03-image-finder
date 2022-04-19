@@ -2,7 +2,7 @@ import { Component } from 'react';
 import s from './imageGallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import Loader from 'components/Loader/Loader';
-import Button from 'components/Button/Button';
+import Button from 'components/Button/button';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,7 +17,11 @@ export default class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.picture !== this.props.picture) {
-      this.setState({ status: 'panding', page: 1 });
+      this.setState({
+        status: 'panding',
+        page: 1,
+        pictureGallery: [],
+      });
       fetch(
         `https://pixabay.com/api/?q=${this.props.picture}&page=${this.state.page}&key=25171903-77720667295a00af61497589c&image_type=photo&orientation=horizontal&per_page=12`
       )
@@ -60,11 +64,10 @@ export default class ImageGallery extends Component {
 
   loadMore = () => {
     this.setState(prev => ({ page: prev.page + 1 }));
-    console.log(this.state.page);
   };
 
   render() {
-    const { status, pictureGallery } = this.state;
+    const { status, pictureGallery, picture, page } = this.state;
     if (status === 'idle') {
       return null;
     }
@@ -75,6 +78,8 @@ export default class ImageGallery extends Component {
       return toast.error('Something went wrong!!!');
     }
     if (status === 'resolved') {
+      // прячем кнопку
+      const balance = picture.totalHits - page * 12;
       return (
         <>
           <ul className={s.imageGallery}>
@@ -89,7 +94,7 @@ export default class ImageGallery extends Component {
               );
             })}
           </ul>
-          <Button loadMore={this.loadMore} />
+          {balance > 0 && <Button loadMore={this.loadMore} />}
         </>
       );
     }

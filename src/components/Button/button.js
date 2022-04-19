@@ -9,6 +9,7 @@ const Button = ({ loadMore }) => {
     </button>
   );
 };
+
 export default Button;
 
 Button.propTypes = {

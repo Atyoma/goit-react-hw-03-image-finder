@@ -12,7 +12,7 @@ export default class App extends Component {
     picture: '',
     status: 'idle',
     page: 1,
-    pictureGallary:[]
+    pictureGallery:[]
   };
 
   handleFormSubmit = picture => {
@@ -27,7 +27,7 @@ export default class App extends Component {
     return (
       <div className ={s.app}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery picture={this.state.picture} page={this.state.page} pictureGallary={this.state.pictureGallary} />
+        <ImageGallery picture={this.state.picture} page={this.state.page} pictureGallery={this.state.pictureGallery} />
          {/* {this.state.picture.length > 0 && (
           
         )} */}
