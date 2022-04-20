@@ -18,10 +18,8 @@ export default class App extends Component {
 
   handleFormSubmit = picture => {
     this.setState({ picture })
-    
   }
 
-  
 
   render() {
     // console.log(this.state.picture.length)

@@ -70,11 +70,18 @@ export default class ImageGallery extends Component {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
 
-  toggleModal = modalImage => {
+  openModal = modalImage => {
     // console.log(e);
-    this.setState(state => ({
-      showModal: !state.showModal,
+    this.setState(() => ({
+      showModal: true,
       modal: modalImage,
+    }));
+  };
+
+  closeModal = () => {
+    // console.log(e);
+    this.setState(() => ({
+      showModal: false,
     }));
   };
 
@@ -103,7 +110,7 @@ export default class ImageGallery extends Component {
                   largeImageURL={hit.largeImageURL}
                   webformatURL={hit.webformatURL}
                   pictureGallery={pictureGallery}
-                  onClick={this.toggleModal}
+                  onClick={this.openModal}
                 />
               );
             })}
@@ -111,7 +118,7 @@ export default class ImageGallery extends Component {
           {balance > 0 && <Button loadMore={this.loadMore} />}
           {showModal && (
             <Modal
-              onClose={this.toggleModal}
+              onClose={this.closeModal}
               modalImage={this.state.modal}
             ></Modal>
           )}
