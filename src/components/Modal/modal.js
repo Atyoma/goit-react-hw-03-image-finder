@@ -15,7 +15,6 @@ export default class Modal extends Component {
   handleKeyDown = e => {
     if (e.code === 'Escape') {
       this.props.onClose();
-      // console.log('yep!!!')
     }
   };
   //======================
@@ -24,7 +23,6 @@ export default class Modal extends Component {
 
   handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
-      // console.log('ups!!!')
       this.props.onClose();
     }
   };
