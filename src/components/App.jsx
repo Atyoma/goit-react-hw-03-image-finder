@@ -92,14 +92,14 @@ export default class App extends Component {
   };
 
   render() {
-    const { status, page, showModal, totalHits } = this.state;
+    const { status, page, showModal, totalHits, pictureGallery } = this.state;
     const balance = totalHits - page * 12;
     // console.log(balance)
     return (
       <div className={s.app}>
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
-          pictureGallery={this.state.pictureGallery}
+          pictureGallery={pictureGallery}
           status={status}
           showModal={showModal}
           openModal={this.openModal}
