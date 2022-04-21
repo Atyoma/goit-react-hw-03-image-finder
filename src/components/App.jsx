@@ -4,7 +4,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/modal';
 import Button from './Button/button';
-
+import api from './Service/api-service'; 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default class App extends Component {
@@ -17,6 +17,7 @@ export default class App extends Component {
     modal: null,
     showModal: false,
     totalHits: null,
+    per_page:12
   };
 
   handleFormSubmit = picture => {
@@ -26,7 +27,7 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const BASE_URL = 'https://pixabay.com/api/';
     const KEY = '25171903-77720667295a00af61497589c';
-    const { picture, page } = this.state;
+    const { picture, page, per_page } = this.state;
 
     if (prevState.picture !== this.state.picture) {
       this.setState({
@@ -34,15 +35,7 @@ export default class App extends Component {
         page: 1,
         pictureGallery: [],
       });
-      fetch(
-        `${BASE_URL}?q=${picture}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          Promise.reject(new Error('Something went wrong!!!'));
-        })
+      api.fetchPicture(BASE_URL, picture, page, per_page, KEY) 
         .then(picture =>
           this.setState({
             pictureGallery: [...picture.hits],
@@ -55,15 +48,7 @@ export default class App extends Component {
 
     if (prevState.page !== page) {
       this.setState({ status: 'panding' });
-      fetch(
-        `${BASE_URL}?q=${picture}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          Promise.reject(new Error('Something went wrong!!!'));
-        })
+      api.fetchPicture(BASE_URL, picture, page, per_page, KEY) 
         .then(pictureGallery =>
           this.setState(prev => ({
             pictureGallery: [...prev.pictureGallery, ...pictureGallery.hits],
@@ -92,8 +77,8 @@ export default class App extends Component {
   };
 
   render() {
-    const { status, page, showModal, totalHits, pictureGallery } = this.state;
-    const balance = totalHits - page * 12;
+    const { status, page, showModal, totalHits, pictureGallery, per_page } = this.state;
+    const balance = totalHits - page * per_page;
     // console.log(balance)
     return (
       <div className={s.app}>
