@@ -4,7 +4,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/modal';
 import Button from './Button/button';
-import api from './Service/api-service'; 
+import api from '../Service/api-service'; 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default class App extends Component {
@@ -25,8 +25,7 @@ export default class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const BASE_URL = 'https://pixabay.com/api/';
-    const KEY = '25171903-77720667295a00af61497589c';
+   
     const { picture, page, per_page } = this.state;
 
     if (prevState.picture !== this.state.picture) {
@@ -35,7 +34,7 @@ export default class App extends Component {
         page: 1,
         pictureGallery: [],
       });
-      api.fetchPicture(BASE_URL, picture, page, per_page, KEY) 
+      api.fetchPicture( picture, page, per_page) 
         .then(picture =>
           this.setState({
             pictureGallery: [...picture.hits],
@@ -48,7 +47,7 @@ export default class App extends Component {
 
     if (prevState.page !== page) {
       this.setState({ status: 'panding' });
-      api.fetchPicture(BASE_URL, picture, page, per_page, KEY) 
+      api.fetchPicture( picture, page, per_page) 
         .then(pictureGallery =>
           this.setState(prev => ({
             pictureGallery: [...prev.pictureGallery, ...pictureGallery.hits],
